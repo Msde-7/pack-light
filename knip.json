@@ -1,0 +1,14 @@
+{
+  "entry": [
+    "src/cli/main.ts",
+    "src/hooks/*.ts",
+    "src/web/main.ts",
+    "src/web/dev/*.ts",
+    "scripts/*.mjs",
+    "scripts/showcase/card.mjs"
+  ],
+  "project": ["src/**/*.ts", "scripts/**/*.mjs"],
+  "ignoreDependencies": ["@fontsource/press-start-2p", "@fontsource/vt323"],
+  "ignoreBinaries": ["ffmpeg"],
+  "ignoreExportsUsedInFile": true
+}
