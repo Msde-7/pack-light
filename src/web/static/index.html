@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Pack Light</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#slots">Skip to inventory</a>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" id="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Pack Light</span>
+      </div>
+      <nav class="session-tabs" id="session-tabs" role="tablist" aria-label="Sessions"></nav>
+      <span class="connection" id="connection" role="status" hidden></span>
+      <div class="topbar-tools">
+        <button
+          type="button"
+          class="icon-button tool"
+          id="open-settings"
+          aria-label="Settings"
+          title="Settings"
+        >
+          ⚙
+        </button>
+        <button
+          type="button"
+          class="icon-button tool"
+          id="open-help"
+          aria-label="Help"
+          title="Help"
+          aria-keyshortcuts="?"
+        >
+          ?
+        </button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <div class="trail-head">
+        <div class="stamina" id="stamina" hidden></div>
+        <nav class="agent-tabs" id="agent-tabs" role="tablist" aria-label="Agents" hidden></nav>
+      </div>
+      <section class="trail" aria-label="Trail">
+        <div class="scene-frame" id="scene-frame">
+          <canvas
+            id="scene"
+            class="scene"
+            aria-label="Trail scene with the hiker and their pack"
+            role="img"
+          ></canvas>
+          <button type="button" class="scene-hint" id="scene-hint" hidden>
+            Camping. Click or press Esc to skip.
+          </button>
+        </div>
+      </section>
+
+      <aside class="side" aria-label="Pack">
+        <section class="panel inventory" aria-labelledby="inventory-title">
+          <header class="panel-head">
+            <h2 id="inventory-title">Inventory</h2>
+            <span class="panel-meta" id="inventory-summary"></span>
+            <label class="sort">
+              <span>Sort</span>
+              <select id="sort" class="input">
+                <option value="weight">weight</option>
+                <option value="recent">recent</option>
+                <option value="kind">kind</option>
+              </select>
+            </label>
+          </header>
+          <div
+            class="slots"
+            id="slots"
+            role="group"
+            aria-label="Items in the pack"
+            aria-keyshortcuts="P"
+            tabindex="-1"
+          ></div>
+        </section>
+
+        <section class="panel detail" id="detail" aria-labelledby="detail-title">
+          <header class="panel-head">
+            <h2 id="detail-title">Item</h2>
+          </header>
+          <div class="detail-body" id="detail-body"></div>
+        </section>
+
+        <section class="panel keep" aria-labelledby="keep-title">
+          <header class="panel-head">
+            <h2 id="keep-title">Keep list <span class="count" id="keep-count"></span></h2>
+            <button
+              type="button"
+              class="btn btn-small"
+              id="copy-compact"
+              title="Copies a /compact command that asks the summary to keep your pins"
+            >
+              Copy /compact
+            </button>
+          </header>
+          <ol class="rows keep-list" id="keep-list" aria-describedby="keep-hint"></ol>
+          <p class="quiet" id="keep-hint">
+            Top pins win when space runs short. Drag or use the arrows to reorder.
+          </p>
+        </section>
+
+        <section class="panel lost" aria-labelledby="lost-title">
+          <header class="panel-head">
+            <h2 id="lost-title">Lost &amp; Found <span class="count" id="lost-count"></span></h2>
+            <button type="button" class="btn btn-small btn-ghost" id="lost-all" hidden>
+              Select all
+            </button>
+          </header>
+          <ul class="rows" id="lost-list"></ul>
+          <div class="button-row">
+            <button type="button" class="btn btn-primary" id="repack" disabled>
+              Repack selected
+            </button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="panel insights" id="insights" aria-label="Trail notes">
+        <section class="insight" id="heaviest" aria-labelledby="heaviest-title" hidden>
+          <h3 id="heaviest-title">Heaviest</h3>
+          <ol class="rows" id="heaviest-list"></ol>
+        </section>
+        <section class="insight" id="tips" aria-labelledby="tips-title" hidden>
+          <h3 id="tips-title">Trail tips</h3>
+          <ul class="rows" id="tips-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+    <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+    <dialog class="dialog" id="settings" aria-labelledby="settings-title">
+      <form method="dialog">
+        <header class="panel-head">
+          <h2 id="settings-title">Settings</h2>
+          <button class="icon-button" value="close" aria-label="Close settings">×</button>
+        </header>
+        <label class="toggle">
+          <input type="checkbox" id="bare-mode" />
+          <span>
+            <strong>Bare mode</strong>
+            <span class="quiet"
+              >Hides paths, commands and notes. Handy for screenshots and streams.</span
+            >
+          </span>
+        </label>
+        <fieldset class="motion">
+          <legend>Motion</legend>
+          <label><input type="radio" name="motion" value="system" /> Follow my system</label>
+          <label><input type="radio" name="motion" value="reduce" /> Reduce motion</label>
+          <label><input type="radio" name="motion" value="full" /> Full motion</label>
+        </fieldset>
+      </form>
+    </dialog>
+
+    <dialog class="dialog" id="help" aria-labelledby="help-title">
+      <form method="dialog">
+        <header class="panel-head">
+          <h2 id="help-title">How the pack works</h2>
+          <button class="icon-button" value="close" aria-label="Close help">×</button>
+        </header>
+        <p>
+          Every file Claude reads and every tool it runs lands in the pack as an item. The fuller
+          the context window, the slower the hiker walks.
+        </p>
+        <p>
+          When the window fills up, Claude Code compacts it. That is camp. Unpinned items stay
+          behind in Lost &amp; Found. Pinned items come back right after camp.
+        </p>
+        <h3>Weights</h3>
+        <ul class="legend">
+          <li><span class="swatch w-pebble"></span>Pebble, under ≈500 tokens</li>
+          <li><span class="swatch w-book"></span>Book, under ≈2K</li>
+          <li><span class="swatch w-brick"></span>Brick, under ≈8K</li>
+          <li><span class="swatch w-anvil"></span>Anvil, ≈8K and up</li>
+        </ul>
+        <h3>Keys</h3>
+        <ul class="keys">
+          <li><kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> move through the inventory</li>
+          <li><kbd>Enter</kbd> opens an item</li>
+          <li><kbd>P</kbd> pins or unpins it</li>
+          <li><kbd>Esc</kbd> skips camp or closes the item</li>
+          <li><kbd>?</kbd> opens this help</li>
+        </ul>
+        <h3>Numbers</h3>
+        <p>
+          Item sizes are estimates, so they carry a ≈. Stamina counts toward the point where auto
+          compaction starts, and the window share shows the raw context window.
+        </p>
+        <p class="quiet">
+          Everything stays on this computer. Fonts are VT323 and Press Start 2P under the SIL Open
+          Font License (<a href="fonts/VT323-OFL.txt" target="_blank" rel="noopener">VT323</a>,
+          <a href="fonts/PressStart2P-OFL.txt" target="_blank" rel="noopener">Press Start 2P</a>).
+          Art is original and CC0.
+        </p>
+      </form>
+    </dialog>
+  </body>
+</html>
