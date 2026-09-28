@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pack Light</title>
+    <style>
+      @font-face {
+        font-family: 'VT323';
+        src: url('fonts/vt323-latin-400-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Press Start 2P';
+        src: url('fonts/press-start-2p-latin-400-normal.woff2') format('woff2');
+      }
+      :root {
+        --bg: color-mix(in srgb, var(--p-k) 88%, black);
+        --line: color-mix(in srgb, var(--p-d) 80%, var(--p-k));
+        --panel: color-mix(in srgb, var(--p-d) 22%, var(--p-k));
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--p-w);
+        -webkit-font-smoothing: none;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        background:
+          radial-gradient(ellipse at 50% 45%, rgb(255 255 255 / 0.05), transparent 60%), var(--bg);
+      }
+      h1 {
+        margin: 0;
+        font:
+          72px/1 'Press Start 2P',
+          monospace;
+        color: var(--p-y);
+        text-shadow: 6px 6px 0 rgb(0 0 0 / 0.55);
+        letter-spacing: 4px;
+      }
+      .frame {
+        padding: 12px;
+        background: var(--panel);
+        border: 3px solid var(--line);
+        box-shadow: 8px 8px 0 rgb(0 0 0 / 0.45);
+      }
+      .frame canvas {
+        display: block;
+        width: 960px;
+        height: 540px;
+        image-rendering: pixelated;
+      }
+      p {
+        margin: 0;
+        text-align: center;
+      }
+      .tagline {
+        font:
+          52px/1.2 'VT323',
+          monospace;
+      }
+      .tagline span {
+        display: block;
+      }
+      .tagline span + span {
+        color: var(--p-y);
+      }
+      .end {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .card-end .end {
+        display: flex;
+      }
+      .card-end .tagline {
+        display: none;
+      }
+      .card-end {
+        gap: 30px;
+      }
+      .install {
+        padding: 22px 34px;
+        background: rgb(0 0 0 / 0.35);
+        border: 3px solid var(--p-y);
+        box-shadow: 6px 6px 0 rgb(0 0 0 / 0.5);
+        font:
+          32px/1 'Press Start 2P',
+          monospace;
+      }
+      .install i {
+        font-style: normal;
+        color: var(--p-y);
+      }
+      .repo {
+        font:
+          48px/1 'VT323',
+          monospace;
+        color: var(--p-y);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pack Light</h1>
+    <div class="frame"><canvas width="320" height="180"></canvas></div>
+    <p class="tagline">
+      <span>See what fills your Claude Code context.</span>
+      <span>Keep what matters through compaction.</span>
+    </p>
+    <div class="end">
+      <p class="install"><i>$</i> npx pack-light install</p>
+      <p class="repo">github.com/Msde-7/pack-light</p>
+    </div>
+    <script src="card.js"></script>
+  </body>
+</html>
