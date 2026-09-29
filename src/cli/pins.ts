@@ -4,6 +4,7 @@ import { plural } from '../core/format';
 import { paths } from '../core/paths';
 import { readPins } from '../core/store';
 import type { Pin } from '../core/types';
+import { command } from './_command';
 import type { Approver } from './_prompt';
 import { approver } from './_prompt';
 import { callServer } from './_server';
@@ -93,7 +94,7 @@ export async function run(args: readonly string[]): Promise<number> {
   const [action] = positionals;
   if (action === 'list') return listPins(values.session);
   if (action === 'clear') {
-    return clearPins(values.session, approver(values.yes, 'packlight pins clear --yes'));
+    return clearPins(values.session, approver(values.yes, command('pins clear --yes')));
   }
   console.error(USAGE);
   return 1;

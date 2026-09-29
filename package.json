@@ -2,8 +2,16 @@
   "name": "pack-light",
   "version": "0.1.0",
   "description": "A pixel-art backpack that shows what fills your Claude Code context window and keeps pinned items alive through compaction.",
-  "license": "MIT",
   "author": "Gabriel Shores",
+  "homepage": "https://github.com/Msde-7/pack-light#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Msde-7/pack-light.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Msde-7/pack-light/issues"
+  },
+  "license": "MIT",
   "type": "module",
   "bin": {
     "pack-light": "dist/cli.js",
@@ -19,9 +27,13 @@
   },
   "keywords": [
     "claude-code",
+    "claude",
+    "anthropic",
     "context-window",
+    "compaction",
     "hooks",
-    "pixel-art"
+    "pixel-art",
+    "cli"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",

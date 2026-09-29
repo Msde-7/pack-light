@@ -167,12 +167,12 @@ function emptyText(state: AppState, hasSession: boolean): string {
     return 'The pack is empty. Items show up here as Claude reads files and runs tools.';
   }
   if (state.connection === 'no_token') {
-    return 'Open the link that `packlight start` printed. It carries the key to this page.';
+    return 'Open the link that `npx pack-light` printed. It carries the key to this page.';
   }
   if (state.connection === 'denied') {
-    return 'This page has an old key. Open the fresh link from `packlight start`.';
+    return 'This page has an old key. Open the fresh link from `npx pack-light`.';
   }
-  return 'No sessions yet. Run `packlight install`, then start a Claude Code session.';
+  return 'No sessions yet. Run `npx pack-light install`, then start a Claude Code session.';
 }
 
 function empty(text: string): HTMLElement {

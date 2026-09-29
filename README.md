@@ -134,11 +134,11 @@ packlight install
 | `--statusline` | Feeds the app the exact context numbers from Claude Code's status line. An existing status line is wrapped, not replaced |
 | `--yes`        | Skips the confirmation                                                                                                   |
 
-Run `packlight doctor` afterwards to check that everything is wired up.
+Run `npx pack-light doctor` afterwards to check that everything is wired up.
 
 ## Using Pack Light
 
-1. **Start the app** with `packlight` (or `npx pack-light`). It opens in your browser.
+1. **Start the app** with `npx pack-light`. It opens in your browser.
 2. **Work in Claude Code as usual.** Each session gets a tab, and sessions from the last hour are picked up too.
 3. **Pin what matters.** Click an item, press **Pin** or `P`, and add a note. For file reads you can keep an excerpt of the exact lines.
 4. **Let it compact.** Manually with `/compact` or on its own, the hiker camps and your pins go back into context.
@@ -146,9 +146,11 @@ Run `packlight doctor` afterwards to check that everything is wired up.
 
 Planning a manual compaction? **Copy /compact** builds a `/compact Preserve ...` command from your pins that also steers the summary.
 
-Prefer the terminal? `packlight status` prints each active session's fill, heaviest items and pin count.
+Prefer the terminal? `npx pack-light status` prints each active session's fill, heaviest items and pin count.
 
 ## Commands
+
+Installed from npm? Type `npx pack-light` wherever this table says `packlight`. The hint messages already match whichever one you ran.
 
 | Command                                                 | What it does                                                   |
 | ------------------------------------------------------- | -------------------------------------------------------------- |
@@ -170,7 +172,7 @@ Prefer the terminal? `packlight status` prints each active session's fill, heavi
 ## Uninstall
 
 ```sh
-packlight uninstall
+npx pack-light uninstall
 ```
 
 This removes only the entries install added and restores a wrapped status line. Your settings file is backed up in `~/.pack-light/backups` first. Delete `~/.pack-light` to remove pins and backups too.

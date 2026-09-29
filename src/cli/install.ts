@@ -3,6 +3,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual, parseArgs } from 'node:util';
 import { paths } from '../core/paths';
+import { command } from './_command';
 import { lineDiff } from './_diff';
 import { writeTextAtomic } from '../core/store';
 import { backupFile, readSettings } from './_files';
@@ -108,7 +109,7 @@ export async function install(options: InstallOptions): Promise<number> {
   writeInstalled(nextInstalled);
   console.log(`Installed ${merge.target.entries.length} hooks in ${file.path}.`);
   if (merge.target.statusLine !== undefined) console.log('The status line shows backpack fill.');
-  console.log('Start the app with `packlight` and your sessions will show up as they run.');
+  console.log(`Start the app with \`${command()}\` and your sessions will show up as they run.`);
   return 0;
 }
 
@@ -122,7 +123,7 @@ export async function run(args: readonly string[]): Promise<number> {
     },
   });
   const rerun = [
-    'packlight install',
+    command('install'),
     values.project ? '--project' : '',
     values.statusline ? '--statusline' : '',
     '--yes',

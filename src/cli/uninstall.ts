@@ -1,6 +1,7 @@
 import { rmSync } from 'node:fs';
 import { isDeepStrictEqual, parseArgs } from 'node:util';
 import { paths } from '../core/paths';
+import { command } from './_command';
 import { lineDiff } from './_diff';
 import type { SettingsFile } from './_files';
 import { writeTextAtomic } from '../core/store';
@@ -70,5 +71,5 @@ export async function run(args: readonly string[]): Promise<number> {
     args: [...args],
     options: { yes: { type: 'boolean', short: 'y', default: false } },
   });
-  return uninstall(approver(values.yes, 'packlight uninstall --yes'));
+  return uninstall(approver(values.yes, command('uninstall --yes')));
 }

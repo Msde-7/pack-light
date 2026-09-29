@@ -3,6 +3,7 @@ import { delimiter, join } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import { plural } from '../core/format';
 import { paths } from '../core/paths';
+import { command } from './_command';
 import { readSettings } from './_files';
 import type { InstalledTarget } from './_installed';
 import { readInstalled } from './_installed';
@@ -57,7 +58,7 @@ function checkTarget(target: InstalledTarget): Check[] {
     return [
       fail(
         error instanceof Error ? error.message : String(error),
-        'Fix the JSON, then run `packlight install`.',
+        `Fix the JSON, then run \`${command('install')}\`.`,
       ),
     ];
   }
@@ -67,7 +68,7 @@ function checkTarget(target: InstalledTarget): Check[] {
       ? ok(`${target.entries.length} hooks installed in ${target.settingsPath}`)
       : fail(
           `${missing.length} hooks are missing from ${target.settingsPath}`,
-          'Run `packlight install` again.',
+          `Run \`${command('install')}\` again.`,
         ),
   ];
   const scripts = [...new Set(target.entries.map(entry => entry.script))];
@@ -77,7 +78,7 @@ function checkTarget(target: InstalledTarget): Check[] {
       ? ok('Hook scripts are in place')
       : fail(
           `${gone.length} hook scripts are missing, such as ${gone[0] ?? ''}`,
-          'Run `packlight install` again.',
+          `Run \`${command('install')}\` again.`,
         ),
   );
   if (target.statusLine !== undefined) {
@@ -86,7 +87,7 @@ function checkTarget(target: InstalledTarget): Check[] {
         ? ok('Status line shows backpack fill')
         : warn(
             'The status line was changed after install',
-            'Run `packlight install --statusline` to wrap it again.',
+            `Run \`${command('install --statusline')}\` to wrap it again.`,
           ),
     );
   }
@@ -96,7 +97,7 @@ function checkTarget(target: InstalledTarget): Check[] {
 function checkInstall(): Check[] {
   const installed = readInstalled();
   if (installed === undefined || installed.targets.length === 0) {
-    return [fail('Hooks are not installed', 'Run `packlight install`.')];
+    return [fail('Hooks are not installed', `Run \`${command('install')}\`.`)];
   }
   return installed.targets.flatMap(checkTarget);
 }
@@ -104,11 +105,11 @@ function checkInstall(): Check[] {
 async function checkServer(): Promise<Check> {
   const reply = await callServer('GET', '/api/health');
   if (reply === undefined) {
-    return warn('Pack Light is not running', 'Run `packlight` to start it.');
+    return warn('Pack Light is not running', `Run \`${command()}\` to start it.`);
   }
   return reply.status === 200
     ? ok('Pack Light is running')
-    : warn(`Pack Light answered with status ${reply.status}`, 'Restart it with `packlight`.');
+    : warn(`Pack Light answered with status ${reply.status}`, `Restart it with \`${command()}\`.`);
 }
 
 function checkTranscripts(): Check {
